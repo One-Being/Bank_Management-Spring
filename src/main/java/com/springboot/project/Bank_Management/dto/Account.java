@@ -21,7 +21,7 @@ public class Account
 {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
+	private int accountId;
 	private long accountNumber;
 	private String password;
 	private AccountType actype;

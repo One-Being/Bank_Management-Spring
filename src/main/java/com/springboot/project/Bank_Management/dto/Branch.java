@@ -22,7 +22,7 @@ public class Branch
 {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
+	private int branchId;
 	private String ifsc;
 	private String name;
 	@ManyToOne

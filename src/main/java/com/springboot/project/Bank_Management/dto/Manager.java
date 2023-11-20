@@ -18,7 +18,7 @@ public class Manager {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
+	private int managerId;
 	private String name;
 	private String password;
 	@OneToOne

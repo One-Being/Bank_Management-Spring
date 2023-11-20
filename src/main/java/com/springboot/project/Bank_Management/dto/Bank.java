@@ -20,7 +20,7 @@ public class Bank
 {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id; 
+	private int bankId; 
 	private String name;
 	private long contact;
 	@OneToMany

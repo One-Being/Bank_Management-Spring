@@ -5,80 +5,79 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.springboot.project.Bank_Management.dto.Address;
+
 import com.springboot.project.Bank_Management.dto.Branch;
-import com.springboot.project.Bank_Management.repository.AddressRepo;
 import com.springboot.project.Bank_Management.repository.BranchRepo;
 
 public class BranchDao {
 
 	@Autowired
-	AddressRepo repo;
+	BranchRepo repo;
 	
 	@Autowired
-	Address bnk;
+	Branch bnk;
 	
-	public Address saveAddress( Address b) 
+	public Branch saveBranch( Branch b) 
 	{
 		return repo.save(b);
 	}
 	
-	public Address findAddress(int id) 
+	public Branch findBranch(int id) 
 	{
-		Optional<Address> opAddress = repo.findById(id);
-		if (opAddress.isPresent()) 
+		Optional<Branch> opBranch = repo.findById(id);
+		if (opBranch.isPresent()) 
 		{
-			return opAddress.get();
+			return opBranch.get();
 		}
 		 return null;
 	}
 	
-	public Address deleteAddress(int id) 
+	public Branch deleteBranch(int id) 
 	{
-		Address exAddress = findAddress(id);
+		Branch exBranch = findBranch(id);
 		
-		if (exAddress != null) 
+		if (exBranch != null) 
 		{
-			repo.delete(exAddress);
-			return exAddress;
+			repo.delete(exBranch);
+			return exBranch;
 		}
 		 return null;
 	}
 	
-	public List<Address> findAll() {
-		List <Address> Addresslist = repo.findAll();
-		return  Addresslist;
+	public List<Branch> findAll() {
+		List <Branch> Branchlist = repo.findAll();
+		return  Branchlist;
 	}
 	
-	public Address updateAddress(Address b , int id) 
+	public Branch updateBranch(Branch b , int id) 
 	{
-		Address exAddress = findAddress(id);
-		if (exAddress != null) 
+		Branch exBranch = findBranch(id);
+		if (exBranch != null) 
 		{
 			if (b.getName()==(null)) 
 			{
-				b.setName(exAddress.getName());
+				b.setName(exBranch.getName());
 				
 			}
 			if(b.getUser() == null) {
 				
-				b.setUser(exAddress.getUser());
+				b.setUser(exBranch.getUser());
 			}
 			if(b.getAddress() == null) {
 				
-				b.setAddress(exAddress.getAddress());
+				b.setAddress(exBranch.getAddress());
 			}
 			if (b.getIfsc() == null) 
 			{
-				b.setIfsc(exAddress.getIfsc());
+				b.setIfsc(exBranch.getIfsc());
 				
 			}
 			if (b.getBank() == null) 
 			{
-				b.setBank(exAddress.getBank());
+				b.setBank(exBranch.getBank());
 				
 			}
-			b.setId(id);
+			b.setBranchId(id);
 			return repo.save(b);
 		}
 		 return null;

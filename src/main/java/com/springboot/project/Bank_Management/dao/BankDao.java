@@ -68,7 +68,7 @@ public class BankDao {
 				b.setBranches(exBank.getBranches());
 				
 			}
-			b.setId(id);
+			b.setBankId(id);
 			return repo.save(b);
 		}
 		 return null;
