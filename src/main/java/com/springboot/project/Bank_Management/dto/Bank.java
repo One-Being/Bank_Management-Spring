@@ -1,5 +1,7 @@
 package com.springboot.project.Bank_Management.dto;
 
+import java.util.List;
+
 import org.springframework.stereotype.Component;
 
 import jakarta.persistence.Entity;
@@ -20,7 +22,8 @@ public class Bank
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id; 
 	private String name;
+	private long contact;
 	@OneToMany
-	private Address address;
+	private List<Branch> branches;
 
 }

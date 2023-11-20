@@ -1,5 +1,7 @@
 package com.springboot.project.Bank_Management.dto;
 
+import java.util.Date;
+
 import org.springframework.stereotype.Component;
 
 import jakarta.persistence.Entity;
@@ -19,9 +21,10 @@ public class Transaction
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	@ManyToOne
-	private Account account;
+	
+	private int amount;
 	private Account toAccount;
+	private Date date;
 	private TransactionType type;
 	private TransactionStatus status;
 	

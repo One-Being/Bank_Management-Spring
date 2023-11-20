@@ -1,5 +1,7 @@
 package com.springboot.project.Bank_Management.dto;
 
+import java.util.List;
+
 import org.springframework.stereotype.Component;
 
 import jakarta.persistence.Entity;
@@ -28,7 +30,7 @@ public class Branch
 	@OneToOne
 	private Manager manager;
 	@OneToMany
-	private User user;
+	private List<User> user;
 	@OneToOne
 	private Address address;
 	

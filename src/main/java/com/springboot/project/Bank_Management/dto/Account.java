@@ -1,5 +1,7 @@
 package com.springboot.project.Bank_Management.dto;
 
+import java.util.List;
+
 import org.springframework.stereotype.Component;
 
 import jakarta.persistence.Entity;
@@ -27,7 +29,7 @@ public class Account
 	@OneToOne
 	private User user;
 	@OneToMany
-	private Transaction transact;
+	private List<Transaction> transact;
 	
 
 }
