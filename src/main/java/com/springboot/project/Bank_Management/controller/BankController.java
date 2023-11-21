@@ -29,11 +29,11 @@ public class BankController
 		
 	}
 	
-//	@DeleteMapping
-//	public  ResponseEntity<ResponseStructure<Bank>> deleteBook(@RequestParam int id) 
-//	{
-//		return service.deleteBank(id);
-//	}
+	@DeleteMapping
+	public  ResponseEntity<ResponseStructure<Bank>> deleteBook(@RequestParam int id) 
+	{
+		return service.deleteBank(id);
+	}
 	
 	@PutMapping
 	public  ResponseEntity<ResponseStructure<Bank>> updateBank(@RequestBody Bank b, @RequestParam int id) 
@@ -48,6 +48,12 @@ public class BankController
 		return service.findBank(id);
 	}
 	
+	@PutMapping("/assignbranch")
+	public  ResponseEntity<ResponseStructure<Bank>> assignBranchToBank( @RequestParam int bankId , @RequestParam int branchId ) 
+	{
+		return service.assignBranchToBank(bankId,branchId);
+		
+	}
 	
 
 }

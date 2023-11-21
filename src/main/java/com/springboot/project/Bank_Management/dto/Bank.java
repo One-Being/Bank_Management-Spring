@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.springframework.stereotype.Component;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -23,6 +25,7 @@ public class Bank
 	private int bankId; 
 	private String name;
 	private long contact;
+	@JsonManagedReference
 	@OneToMany
 	private List<Branch> branches;
 
