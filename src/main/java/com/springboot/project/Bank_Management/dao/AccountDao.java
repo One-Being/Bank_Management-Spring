@@ -4,10 +4,12 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import com.springboot.project.Bank_Management.dto.Account;
 import com.springboot.project.Bank_Management.repository.AccountRepo;
 
+@Repository
 public class AccountDao {
 	@Autowired
 	AccountRepo repo;

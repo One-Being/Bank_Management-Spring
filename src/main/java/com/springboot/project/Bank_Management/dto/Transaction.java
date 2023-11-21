@@ -23,7 +23,7 @@ public class Transaction
 	private int transactionId;
 	
 	private int amount;
-	private Account toAccount;
+	private int toAccount;
 	private Date date;
 	private TransactionType type;
 	private TransactionStatus status;

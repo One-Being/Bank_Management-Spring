@@ -4,10 +4,12 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import com.springboot.project.Bank_Management.dto.User;
 import com.springboot.project.Bank_Management.repository.UserRepo;
 
+@Repository
 public class UserDao {
 	@Autowired
 	UserRepo repo;

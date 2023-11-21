@@ -4,10 +4,12 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import com.springboot.project.Bank_Management.dto.Address;
 import com.springboot.project.Bank_Management.repository.AddressRepo;
 
+@Repository
 public class AddressDao 
 {
 	@Autowired
@@ -42,6 +44,37 @@ public class AddressDao
 		Address ex = findAddress(id);
 		if(ex != null)
 		{
+			
+			if (b.getContact() <= 0) {
+				b.setContact(ex.getContact());
+			}
+			
+			
+			if (b.getCity().isBlank()) 
+			{
+				b.setCity(ex.getCity());
+				
+			}
+			
+			if (b.getPincode() <=0)
+			{
+				b.setPincode(ex.getPincode());
+				
+			}
+			
+			if (b.getState().isBlank()) 
+			{
+				b.setState(ex.getState());
+				
+			}
+			
+			if (b.getStreet().isBlank()) 
+			{
+				b.setStreet(ex.getStreet());
+				
+				
+			}
+			
 			b.setAddressId(id);
 			return repo.save(b);
 		}

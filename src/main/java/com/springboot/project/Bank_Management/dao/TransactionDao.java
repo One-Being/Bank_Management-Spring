@@ -4,10 +4,12 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import com.springboot.project.Bank_Management.dto.Transaction;
 import com.springboot.project.Bank_Management.repository.TransactionRepo;
 
+@Repository
 public class TransactionDao 
 {
 	
@@ -43,6 +45,10 @@ public class TransactionDao
 		Transaction ex = findTransaction(id);
 		if(ex != null)
 		{
+			
+			if (b.getAmount() <=0) {
+				b.setAmount(ex.getAmount());
+			}
 			b.setTransactionId(id);
 			return repo.save(b);
 		}

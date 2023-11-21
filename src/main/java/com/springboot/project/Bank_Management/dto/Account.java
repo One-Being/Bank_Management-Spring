@@ -13,10 +13,11 @@ import jakarta.persistence.OneToOne;
 import lombok.Getter;
 import lombok.Setter;
 
-@Component
 @Entity
+
 @Setter
 @Getter
+@Component
 public class Account 
 {
 	@Id
