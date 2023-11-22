@@ -24,9 +24,9 @@ public class BranchController
 	BranchService service;
 	
 	@PostMapping
-	public ResponseEntity<ResponseStructure<Branch>> saveBranch(@RequestBody Branch Branch) 
+	public ResponseEntity<ResponseStructure<Branch>> saveBranch(@RequestBody Branch Branch ,  @RequestParam int branchId) 
 	{
-		return service.saveBranch(Branch);
+		return service.saveBranch(Branch,branchId);
 		
 	}
 	

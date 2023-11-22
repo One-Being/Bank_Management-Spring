@@ -30,6 +30,7 @@ public class Branch
 	@JsonBackReference
 	@ManyToOne
 	private Bank bank;
+	@JsonBackReference
 	@OneToOne
 	private Manager manager;
 	@OneToMany

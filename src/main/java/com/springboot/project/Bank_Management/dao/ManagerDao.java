@@ -44,6 +44,25 @@ public class ManagerDao
 		Manager ex = findManager(id);
 		if(ex != null)
 		{
+			if (b.getAddress()== null)
+			{
+				b.setAddress(ex.getAddress());
+			}
+			
+			if(b.getBranch() == null) {
+				b.setBranch(ex.getBranch());
+			}
+			if (b.getName().isBlank()) 
+			{
+				b.setName(ex.getName());
+				
+			}
+			if (b.getPassword().isBlank()) 
+			{
+				b.setPassword(ex.getPassword());
+				
+			}
+			
 			b.setManagerId(id);
 			return repo.save(b);
 		}

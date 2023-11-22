@@ -23,13 +23,27 @@ public class BankService {
 	@Autowired
 	BranchDao brdao;
 	
-	public ResponseEntity<ResponseStructure<Bank>> saveBank(Bank b) 
+	public ResponseEntity<ResponseStructure<Bank>> saveBank(Bank b, int branchId) 
 	{
 		ResponseStructure<Bank> repost = new ResponseStructure<>();
-		repost.setData(bdao.saveBank(b));
-		repost.setMessage("Bank Has Been Saved");
-		repost.setStatus(HttpStatus.CREATED.value());
-		return new ResponseEntity<ResponseStructure<Bank>>(repost,HttpStatus.CREATED );
+		Branch ex = brdao.findBranch(branchId);
+		Bank saveBank = bdao.saveBank(b);
+			if (brdao.findBranch(branchId)!=null) {
+				brdao.updateBranch(ex, branchId);
+				List<Branch> brlist = new ArrayList<>();
+				saveBank.setBranches(brlist);
+				saveBank = bdao.updateBank(saveBank, saveBank.getBankId());
+				repost.setData(saveBank);
+				repost.setMessage("Bank Has Been  Saved and branch assigned");
+				repost.setStatus(HttpStatus.CREATED.value());
+				return new ResponseEntity<ResponseStructure<Bank>>(repost,HttpStatus.CREATED );
+			}
+			repost.setData(saveBank);
+			repost.setMessage("Bank Has Been Saved");
+			repost.setStatus(HttpStatus.CREATED.value());
+			return new ResponseEntity<ResponseStructure<Bank>>(repost,HttpStatus.CREATED );
+			
+
 	}
 	public ResponseEntity<ResponseStructure<Bank>> updateBank(Bank b , int id) 
 	{
@@ -59,7 +73,7 @@ public class BankService {
 	{
 		ResponseStructure<Bank> repost = new ResponseStructure<>();
 		if (bdao.findBank(bankId)!=null) {
-			if (bdao.findBank(branchId)!=null) {
+			if (brdao.findBranch(branchId)!=null) {
 				
 				 List<Branch> lis = new ArrayList<>();
 				 lis.add(brdao.findBranch(branchId));

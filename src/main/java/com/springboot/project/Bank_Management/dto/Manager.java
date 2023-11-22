@@ -2,6 +2,8 @@ package com.springboot.project.Bank_Management.dto;
 
 import org.springframework.stereotype.Component;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -23,6 +25,7 @@ public class Manager {
 	private String password;
 	@OneToOne
 	private Address address;
+	@JsonManagedReference
 	@OneToOne
 	private Branch branch;
 }
