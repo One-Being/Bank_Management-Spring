@@ -52,12 +52,12 @@ public class ManagerDao
 			if(b.getBranch() == null) {
 				b.setBranch(ex.getBranch());
 			}
-			if (b.getName().isBlank()) 
+			if (b.getName() == (null)) 
 			{
 				b.setName(ex.getName());
 				
 			}
-			if (b.getPassword().isBlank()) 
+			if (b.getPassword() == (null)) 
 			{
 				b.setPassword(ex.getPassword());
 				

@@ -32,8 +32,7 @@ public class BranchService {
 		Branch savedBranch = brdao.saveBranch(b);
 		exBank.getBranches().add(savedBranch);
 		savedBranch.setBank(exBank);
-		savedBranch = brdao.updateBranch(savedBranch, savedBranch.getBranchId());
-		repost.setData(savedBranch);
+		repost.setData(brdao.updateBranch(savedBranch, savedBranch.getBranchId()));
 		repost.setMessage("Branch Has Been Saved");
 		repost.setStatus(HttpStatus.CREATED.value());
 		return new ResponseEntity<ResponseStructure<Branch>>(repost,HttpStatus.CREATED );
@@ -53,7 +52,11 @@ public class BranchService {
 	public ResponseEntity<ResponseStructure<Branch>> deleteBranch( int id) 
 	{
 		ResponseStructure<Branch> repost = new ResponseStructure<>();
-		if (brdao.findBranch(id)!=null) {
+		Branch branch = brdao.findBranch(id);
+		if (branch!=null) {
+			branch.getBank().setBranches(null);
+			branch.getManager().setBranch(null);
+			brdao.updateBranch(branch, id);
 			repost.setData(brdao.deleteBranch(id));
 			repost.setMessage("Branch Has Been Deleted");
 			repost.setStatus(HttpStatus.OK.value());

@@ -5,6 +5,8 @@ import java.util.List;
 import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -27,10 +29,10 @@ public class Branch
 	private int branchId;
 	private String ifsc;
 	private String name;
-	@JsonBackReference
+	@JsonIgnore
 	@ManyToOne
 	private Bank bank;
-	@JsonBackReference
+    @JsonIgnore
 	@OneToOne
 	private Manager manager;
 	@OneToMany

@@ -29,12 +29,10 @@ public class ManagerService {
 	public ResponseEntity<ResponseStructure<Manager>> saveManager(Manager b,int branchId) 
 	{
 		ResponseStructure<Manager> repost = new ResponseStructure<>();
-		Branch exBranch = bdao.findBranch(branchId);
 		Manager savedManager = brdao.saveManager(b);
-		exBranch.setManager(savedManager);;
-		savedManager.setBranch(exBranch);
-		savedManager = brdao.updateManager(savedManager.getManagerId(),savedManager);
-		repost.setData(savedManager);
+		bdao.findBranch(branchId).setManager(savedManager);
+		savedManager.setBranch(bdao.findBranch(branchId));
+		repost.setData(brdao.updateManager(savedManager.getManagerId(),savedManager));
 		repost.setMessage("Manager Has Been Saved");
 		repost.setStatus(HttpStatus.CREATED.value());
 		return new ResponseEntity<ResponseStructure<Manager>>(repost,HttpStatus.CREATED );
@@ -51,10 +49,13 @@ public class ManagerService {
 		return null ;//throws Manager not found ex
 		
 	}
-	public ResponseEntity<ResponseStructure<Manager>> deleteManager( int id) 
+	public ResponseEntity<ResponseStructure<Manager>> deleteManager(int id) 
 	{
 		ResponseStructure<Manager> repost = new ResponseStructure<>();
 		if (brdao.findManager(id)!=null) {
+			brdao.findManager(id).getBranch().setManager(null);
+			brdao.findManager(id).setBranch(null);
+			brdao.updateManager(id,brdao.findManager(id));
 			repost.setData(brdao.deleteManager(id));
 			repost.setMessage("Manager Has Been Deleted");
 			repost.setStatus(HttpStatus.OK.value());

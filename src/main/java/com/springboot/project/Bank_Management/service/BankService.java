@@ -29,11 +29,9 @@ public class BankService {
 		Branch ex = brdao.findBranch(branchId);
 		Bank saveBank = bdao.saveBank(b);
 			if (brdao.findBranch(branchId)!=null) {
-				brdao.updateBranch(ex, branchId);
-				List<Branch> brlist = new ArrayList<>();
-				saveBank.setBranches(brlist);
-				saveBank = bdao.updateBank(saveBank, saveBank.getBankId());
-				repost.setData(saveBank);
+				ex.setBank(saveBank);
+				saveBank.getBranches().add(ex);
+				repost.setData(bdao.updateBank(saveBank, saveBank.getBankId()));
 				repost.setMessage("Bank Has Been  Saved and branch assigned");
 				repost.setStatus(HttpStatus.CREATED.value());
 				return new ResponseEntity<ResponseStructure<Bank>>(repost,HttpStatus.CREATED );
