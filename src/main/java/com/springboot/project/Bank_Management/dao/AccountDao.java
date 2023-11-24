@@ -55,7 +55,7 @@ public class AccountDao {
 			{
 				b.setBalance(ex.getBalance());
 			}
-			if (b.getPassword().isBlank()) 
+			if (b.getPassword()==null) 
 			{
 				b.setPassword(ex.getPassword());
 				

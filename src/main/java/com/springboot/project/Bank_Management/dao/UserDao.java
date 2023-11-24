@@ -43,6 +43,25 @@ public class UserDao {
 		User ex = findUser(id);
 		if(ex != null)
 		{
+			if (b.getAccount() == null) 
+			{ 
+				b.setAccount(ex.getAccount());
+			}
+			
+			if (b.getAddress()==null) 
+			{
+				b.setAddress(ex.getAddress());
+				
+			}
+			
+			if (b.getBranch() == null) 
+			{
+				b.setBranch(ex.getBranch());
+				
+			}
+			if (b.getUname() == null) {
+				b.setUname(ex.getUname());
+			}
 			b.setUserId(id);
 			return repo.save(b);
 		}

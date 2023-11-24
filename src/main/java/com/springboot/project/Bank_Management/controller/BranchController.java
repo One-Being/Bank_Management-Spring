@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.springboot.project.Bank_Management.config.ResponseStructure;
-import com.springboot.project.Bank_Management.dto.Bank;
+
 import com.springboot.project.Bank_Management.dto.Branch;
 import com.springboot.project.Bank_Management.service.BranchService;
 

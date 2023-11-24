@@ -47,4 +47,9 @@ public class ManagerController {
 	{
 		return service.findManager(id);
 	}
+	@GetMapping("/login")
+	public  ResponseEntity<ResponseStructure<Manager>> loginManager(@RequestParam String name , @RequestParam String password) 
+	{
+		return service.loginManager(name, password);
+	}
 }

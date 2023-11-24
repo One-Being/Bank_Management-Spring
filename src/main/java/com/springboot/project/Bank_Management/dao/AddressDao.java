@@ -62,13 +62,13 @@ public class AddressDao
 				
 			}
 			
-			if (b.getState().isBlank()) 
+			if (b.getState() == null) 
 			{
 				b.setState(ex.getState());
 				
 			}
 			
-			if (b.getStreet().isBlank()) 
+			if (b.getStreet() == null) 
 			{
 				b.setStreet(ex.getStreet());
 				

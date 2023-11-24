@@ -4,8 +4,11 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Repository;
 
+import com.springboot.project.Bank_Management.config.ResponseStructure;
 import com.springboot.project.Bank_Management.dto.Manager;
 import com.springboot.project.Bank_Management.repository.ManagerRepo;
 
@@ -69,4 +72,25 @@ public class ManagerDao
 		return null;
 	}
 
+	public Manager  loginManager(String name , String password) 
+	{
+		Manager man = repo.loginMananger(name);
+		
+		if (man.getName() != null) 
+		{
+			if (man.getPassword().equals(password)) 
+			{
+				
+				return man;
+				
+			}
+			return null;
+			
+		}
+		
+		
+		return null;
+		
+	}
+	
 }

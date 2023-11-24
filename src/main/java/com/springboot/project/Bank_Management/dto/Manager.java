@@ -2,9 +2,7 @@ package com.springboot.project.Bank_Management.dto;
 
 import org.springframework.stereotype.Component;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -27,7 +25,6 @@ public class Manager {
 	private String password;
 	@OneToOne
 	private Address address;
-	
 	@OneToOne
 	private Branch branch;
 }

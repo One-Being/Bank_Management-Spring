@@ -14,8 +14,9 @@ import com.springboot.project.Bank_Management.config.ResponseStructure;
 import com.springboot.project.Bank_Management.dao.BranchDao;
 import com.springboot.project.Bank_Management.dao.ManagerDao;
 
-import com.springboot.project.Bank_Management.dto.Branch;
+
 import com.springboot.project.Bank_Management.dto.Manager;
+import com.springboot.project.Bank_Management.repository.ManagerRepo;
 
 @Service
 public class ManagerService {
@@ -25,6 +26,9 @@ public class ManagerService {
 	
 	@Autowired
 	BranchDao bdao;
+	
+	@Autowired
+	ManagerRepo repo;
 	
 	public ResponseEntity<ResponseStructure<Manager>> saveManager(Manager b,int branchId) 
 	{
@@ -87,6 +91,34 @@ public class ManagerService {
 		return new ResponseEntity<ResponseStructure<Manager>>(repost,HttpStatus.FOUND );
 		}
 		return null ;//throws Manager not found ex
+	}
+	
+	public ResponseEntity<ResponseStructure<Manager>>  loginManager(String name , String password) 
+	{
+		Manager man = repo.loginMananger(name);
+		ResponseStructure<Manager> repost = new ResponseStructure<>();
+		if (man.getName() != null) 
+		{
+			if (man.getPassword().equals(password)) 
+			{
+				repost.setData(man);
+				repost.setMessage("Login Successfull");
+				repost.setStatus(HttpStatus.OK.value());
+				return new ResponseEntity<ResponseStructure<Manager>>(repost,HttpStatus.OK );
+				
+			}
+			repost.setData(man);
+			repost.setMessage("Login not  Successfull - password is not matching");
+			repost.setStatus(HttpStatus.NOT_ACCEPTABLE.value());
+			return new ResponseEntity<ResponseStructure<Manager>>(repost,HttpStatus.NOT_ACCEPTABLE );
+			
+		}
+		repost.setData(man);
+		repost.setMessage("Login Not Successfull - Manager is not present");
+		repost.setStatus(HttpStatus.NOT_FOUND.value());
+		
+		return new ResponseEntity<ResponseStructure<Manager>>(repost,HttpStatus.NOT_FOUND );
+		
 	}
 	
 	

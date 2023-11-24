@@ -49,6 +49,27 @@ public class TransactionDao
 			if (b.getAmount() <=0) {
 				b.setAmount(ex.getAmount());
 			}
+			if (b.getDate() == null) 
+			{
+				b.setDate(ex.getDate());
+				
+			}
+			
+			if (b.getStatus() == null) 
+			{
+				b.setStatus(ex.getStatus());
+				
+			}
+			if (b.getToAccount() <=0) 
+			{
+				b.setToAccount(ex.getToAccount());
+				
+			}
+			if (b.getType()==null) 
+			{
+				b.setType(ex.getType());
+				
+			}
 			b.setTransactionId(id);
 			return repo.save(b);
 		}
