@@ -24,4 +24,8 @@ public class UserController {
 		return service.saveUser(u, acctype, mname, mpassword);
 		
 	}
+	
+	public ResponseEntity<ResponseStructure<User>> findUser( @RequestParam int id ) {
+		return service.findUser(id);
+	}
 }

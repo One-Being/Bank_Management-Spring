@@ -67,4 +67,18 @@ public class UserService {
 		return new ResponseEntity<ResponseStructure<User>>(repost,HttpStatus.NOT_ACCEPTABLE);
 		
 	}
+	public ResponseEntity<ResponseStructure<User>> findUser(int uid){
+		ResponseStructure<User> repost = new ResponseStructure<>();
+		if(udao.findUser(uid)  != null) {
+			repost.setData(udao.findUser(uid));
+			repost.setMessage("User has been found");
+			repost.setStatus(HttpStatus.FOUND.value());
+			
+			return new  ResponseEntity<ResponseStructure<User>>(repost,HttpStatus.FOUND);
+		}
+		repost.setMessage("User Not Found");
+		repost.setStatus(HttpStatus.NOT_FOUND.value());
+		return new  ResponseEntity<ResponseStructure<User>>(repost,HttpStatus.FOUND);
+	} 
+	
 }
