@@ -12,8 +12,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.springboot.project.Bank_Management.config.ResponseStructure;
-
+import com.springboot.project.Bank_Management.dto.Account;
 import com.springboot.project.Bank_Management.dto.Branch;
+import com.springboot.project.Bank_Management.dto.User;
 import com.springboot.project.Bank_Management.service.BranchService;
 
 @RestController
@@ -55,6 +56,12 @@ public class BranchController
 		return service.assignBankToBranch(branchId,bankId);
 		
 	}
+	
+	@PutMapping("/changebranch")
+	public  ResponseEntity<ResponseStructure<User>> changeBranch(@RequestParam String mname ,@RequestParam String mpassword ,@RequestParam int uid , @RequestParam int bid ){
+		return service.changeBranch(mname, mpassword, uid, bid);
+	}
+	
 	
 
 }

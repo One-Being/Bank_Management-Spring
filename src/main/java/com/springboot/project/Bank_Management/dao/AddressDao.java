@@ -40,7 +40,7 @@ public class AddressDao
 	{
 		return repo.findAll();
 	}
-	public Address updateAccount(int id, Address b) {
+	public Address updateAddress(int id, Address b) {
 		Address ex = findAddress(id);
 		if(ex != null)
 		{

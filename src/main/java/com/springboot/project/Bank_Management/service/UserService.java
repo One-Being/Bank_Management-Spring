@@ -81,4 +81,28 @@ public class UserService {
 		return new  ResponseEntity<ResponseStructure<User>>(repost,HttpStatus.FOUND);
 	} 
 	
+	public ResponseEntity<ResponseStructure<User>> deleteUser(int uid) 
+	{
+		ResponseStructure<User> repost = new ResponseStructure<>();
+		if (udao.findUser(uid)!= null) 
+		{
+		
+		User u = udao.findUser(uid);
+		u.getBranch().getUser().remove(u);
+		u.setBranch(null);
+		udao.updateUser(uid, u);
+		repost.setData(udao.deleteUser(uid));
+		repost.setMessage("User Has Been Deleted");
+		repost.setStatus(HttpStatus.OK.value());
+		return new ResponseEntity<ResponseStructure<User>>(repost,HttpStatus.OK );
+		}
+		
+		repost.setMessage("User Not  Found");
+		repost.setStatus(HttpStatus.NOT_FOUND.value());
+		return new ResponseEntity<ResponseStructure<User>>(repost,HttpStatus.NOT_FOUND );
+	}
+	
+	
+	
+	
 }

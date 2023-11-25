@@ -11,8 +11,12 @@ import org.springframework.stereotype.Service;
 import com.springboot.project.Bank_Management.config.ResponseStructure;
 import com.springboot.project.Bank_Management.dao.BankDao;
 import com.springboot.project.Bank_Management.dao.BranchDao;
+import com.springboot.project.Bank_Management.dao.ManagerDao;
+import com.springboot.project.Bank_Management.dao.UserDao;
 import com.springboot.project.Bank_Management.dto.Bank;
 import com.springboot.project.Bank_Management.dto.Branch;
+import com.springboot.project.Bank_Management.dto.Manager;
+import com.springboot.project.Bank_Management.dto.User;
 
 @Service
 public class BranchService {
@@ -21,7 +25,13 @@ public class BranchService {
 	BranchDao brdao;
 	
 	@Autowired
+	ManagerDao mdao;
+	
+	@Autowired
 	BankDao bdao;
+	
+	@Autowired
+	UserDao udao;
 	
 	public ResponseEntity<ResponseStructure<Branch>> saveBranch(Branch b,int bankId) 
 	{
@@ -101,6 +111,42 @@ public class BranchService {
 		return new ResponseEntity<ResponseStructure<Branch>>(repost,HttpStatus.FOUND );
 		}
 		return null ;//throws Branch not found ex
+	}
+	
+	public  ResponseEntity<ResponseStructure<User>> changeBranch(String mname , String mpassword,int uid, int nbid ) {
+		Manager man = mdao.loginManager(mname, mpassword);
+		ResponseStructure<User> repost = new ResponseStructure<>();
+		User u = udao.findUser(uid);
+		Branch br = brdao.findBranch(nbid);
+		
+		if (man != null) 
+		{
+			if (u != null) 
+			{
+				if(br != null) {
+					if (u.getBranch().getBranchId() != nbid ) {
+						
+						u.getBranch().getUser().remove(u);
+						u.setBranch(br);
+						
+						br.getUser().add(udao.updateUser(uid, u));
+						brdao.updateBranch(br, nbid);
+						repost.setData(u);
+						repost.setMessage("Branch Has Been Changed");
+						repost.setStatus(HttpStatus.ACCEPTED.value());
+						return new ResponseEntity<ResponseStructure<User>>(repost,HttpStatus.ACCEPTED );
+					}
+					repost.setMessage("User can't changed to same branch");
+					repost.setStatus(HttpStatus.BAD_REQUEST.value());
+					return new ResponseEntity<ResponseStructure<User>>(repost,HttpStatus.BAD_REQUEST ) ; 
+				}return null;//branch not found ex
+			}
+			return null;//user not found ex
+			
+		}
+		
+		return null;//mananger excep
+		
 	}
 	
 	

@@ -24,6 +24,11 @@ public class AccountDao {
 		Optional<Account> account = repo.findById(id);
 		return account.get() ;
 	}
+	public Account findAccountByAccountNo(long accno)
+	{
+		return repo.findAccountNumber(accno);
+		
+	}
 	
 	public Account deleteAccount(int id)
 	{
@@ -60,10 +65,15 @@ public class AccountDao {
 				b.setPassword(ex.getPassword());
 				
 			}
-			if (b.getTransact().isEmpty()) 
+			if (b.getTransact() == null) 
 			{
 				b.setTransact(ex.getTransact());
 				
+			}
+			
+			if (b.getUser() == null) 
+			{
+				b.setUser(ex.getUser());
 			}
 			b.setAccountId(id);
 			return repo.save(b);
