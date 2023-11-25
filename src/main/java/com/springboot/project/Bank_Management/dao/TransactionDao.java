@@ -49,9 +49,9 @@ public class TransactionDao
 			if (b.getAmount() <=0) {
 				b.setAmount(ex.getAmount());
 			}
-			if (b.getDate() == null) 
+			if (b.getTransactionTime() == null) 
 			{
-				b.setDate(ex.getDate());
+				b.setTransactionTime(ex.getTransactionTime());
 				
 			}
 			

@@ -1,5 +1,6 @@
 package com.springboot.project.Bank_Management.dto;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 import org.springframework.stereotype.Component;
@@ -23,8 +24,8 @@ public class Transaction
 	private int transactionId;
 	
 	private int amount;
-	private int toAccount;
-	private Date date;
+	private long toAccount;
+	private LocalDate transactionTime;
 	private TransactionType type;
 	private TransactionStatus status;
 	
