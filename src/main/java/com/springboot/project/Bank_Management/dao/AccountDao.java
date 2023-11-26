@@ -80,5 +80,19 @@ public class AccountDao {
 		}
 		return null;
 	}
+	
+	public Account loginAccount(int id, String password) 
+	{
+		
+		Account acc= findAccount(id);
+		if (acc.getPassword().equals(password)) 
+		{
+			return acc;
+			
+		}
+		
+		return null;
+	}
+	
 
 }
