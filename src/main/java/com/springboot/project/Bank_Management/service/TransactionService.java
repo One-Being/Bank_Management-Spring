@@ -1,7 +1,7 @@
 package com.springboot.project.Bank_Management.service;
 
 import java.time.LocalDate;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -25,22 +25,23 @@ public class TransactionService {
 	@Autowired
 	AccountDao acdao;
 	
-	public ResponseEntity<ResponseStructure<Transaction>> sendMoney(Transaction t, int aid , String password)
+	public ResponseEntity<ResponseStructure<Transaction>> sendMoney(Transaction t, long accno , String password)
 	{
 		ResponseStructure<Transaction> repost = new ResponseStructure<>();
-		Account acc = acdao.loginAccount(aid, password);
+		Account acc = acdao.loginAccount(accno, password);
 		Account toacc = acdao.findAccountByAccountNo(t.getToAccount());
 		if(acc!= null) {
 			if(toacc != null) {
-				if( acc.getBalance() >= t.getAmount()) {
+				if( acc.getBalance()-100 >= t.getAmount()) {
 					if(acc != toacc) {
+						if(t.getAmount() > 0) {
 						t.setType(TransactionType.DEBITED);
-						t.setTransactionTime(LocalDate.now());
+						t.setTransactionTime(LocalDateTime.now());
 						t.setStatus(TransactionStatus.SUCCESSFUL);	
 						Transaction ta = tdao.saveTransaction(t);
 						acc.getTransact().add(ta);
 						acc.setBalance(acc.getBalance()-ta.getAmount());
-						acdao.updateAccount(aid, acc);
+						acdao.updateAccount(acc.getAccountId(), acc);
 					
 						Transaction tr = new Transaction();
 						tr.setAmount(ta.getAmount());
@@ -55,11 +56,21 @@ public class TransactionService {
 						repost.setMessage("Transaction Successful");
 						repost.setStatus(HttpStatus.OK.value());
 						return new ResponseEntity<ResponseStructure<Transaction>>(repost,HttpStatus.OK);
+						}
 					}
 					repost.setMessage("Cannot transfer to self");
 					repost.setStatus(HttpStatus.BAD_REQUEST.value());
 					return new ResponseEntity<ResponseStructure<Transaction>>(repost,HttpStatus.BAD_REQUEST);
 				}
+				
+				t.setType(null);
+				t.setTransactionTime(LocalDateTime.now());
+				t.setStatus(TransactionStatus.FAILED);	
+				Transaction ta = tdao.saveTransaction(t);
+				acc.getTransact().add(ta);
+				
+				acdao.updateAccount(acc.getAccountId(), acc);
+				repost.setData(ta);
 				repost.setMessage("Insufficient Balance");
 				repost.setStatus(HttpStatus.BAD_REQUEST.value());
 				return new ResponseEntity<ResponseStructure<Transaction>>(repost,HttpStatus.BAD_REQUEST);

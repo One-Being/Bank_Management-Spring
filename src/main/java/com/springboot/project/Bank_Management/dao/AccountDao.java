@@ -81,10 +81,10 @@ public class AccountDao {
 		return null;
 	}
 	
-	public Account loginAccount(int id, String password) 
+	public Account loginAccount(long accno, String password) 
 	{
 		
-		Account acc= findAccount(id);
+		Account acc= findAccountByAccountNo(accno);
 		if (acc.getPassword().equals(password)) 
 		{
 			return acc;

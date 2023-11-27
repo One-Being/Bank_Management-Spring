@@ -1,5 +1,7 @@
 package com.springboot.project.Bank_Management.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.springboot.project.Bank_Management.config.ResponseStructure;
 import com.springboot.project.Bank_Management.dto.Account;
-
+import com.springboot.project.Bank_Management.dto.Transaction;
 import com.springboot.project.Bank_Management.service.AccountService;
 
 @RestController
@@ -36,6 +38,12 @@ public class AccountController {
 	public  ResponseEntity<ResponseStructure<Account>> findAccountByAccountNumber(long accno) 
 	{
 		return service.findAccountByAccNo(accno);
+	}
+	
+	@GetMapping("gettransaction")
+	public ResponseEntity<ResponseStructure<List<Transaction>>> gettransactions(long accno) 
+	{
+		return service.transaction(accno);
 	}
 	
 	

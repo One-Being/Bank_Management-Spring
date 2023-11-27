@@ -48,12 +48,12 @@ public class BankController
 		return service.findBank(id);
 	}
 	
-	@PutMapping("/assignbranch")
-	public  ResponseEntity<ResponseStructure<Bank>> assignBranchToBank( @RequestParam int bankId , @RequestParam int branchId ) 
-	{
-		return service.assignBranchToBank(bankId,branchId);
-		
-	}
+//	@PutMapping("/assignbranch")
+//	public  ResponseEntity<ResponseStructure<Bank>> assignBranchToBank( @RequestParam int bankId , @RequestParam int branchId ) 
+//	{
+//		return service.assignBranchToBank(bankId,branchId);
+//		
+//	}
 	
 
 }

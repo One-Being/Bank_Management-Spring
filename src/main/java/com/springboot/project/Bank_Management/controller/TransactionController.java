@@ -20,9 +20,9 @@ public class TransactionController {
 	TransactionService service ;
 	
 	@PostMapping
-	public ResponseEntity<ResponseStructure<Transaction>> send(@RequestBody Transaction t , @RequestParam int accid, @RequestParam String password) 
+	public ResponseEntity<ResponseStructure<Transaction>> send(@RequestBody Transaction t , @RequestParam long accno, @RequestParam String password) 
 	{
-		return service.sendMoney(t, accid,password);
+		return service.sendMoney(t, accno,password);
 	}
 	
 }

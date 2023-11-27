@@ -1,5 +1,7 @@
 package com.springboot.project.Bank_Management.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -9,6 +11,7 @@ import com.springboot.project.Bank_Management.config.ResponseStructure;
 import com.springboot.project.Bank_Management.dao.AccountDao;
 import com.springboot.project.Bank_Management.dto.Account;
 import com.springboot.project.Bank_Management.dto.AccountType;
+import com.springboot.project.Bank_Management.dto.Transaction;
 import com.springboot.project.Bank_Management.dto.User;
 
 @Service
@@ -104,5 +107,20 @@ public class AccountService
 			return new ResponseEntity<ResponseStructure<Account>>(repost,HttpStatus.FOUND);
 		}return null;
 	}
+	public ResponseEntity<ResponseStructure<List<Transaction>>> transaction(long  accno)
+	{
+		if (dao.findAccountByAccountNo(accno) != null) 
+		{
+			List<Transaction> tra = dao.findAccountByAccountNo(accno).getTransact();
+			ResponseStructure<List<Transaction>> repost = new ResponseStructure<>();
+			repost.setData(tra);
+			repost.setMessage("Transactions Found ");
+			repost.setStatus(HttpStatus.FOUND.value());
+			return new ResponseEntity<ResponseStructure<List<Transaction>>>(repost,HttpStatus.FOUND);
+			
+		}
+		return null;
+	} 
+	
 
 }

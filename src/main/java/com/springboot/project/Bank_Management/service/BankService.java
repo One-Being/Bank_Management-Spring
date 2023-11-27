@@ -1,6 +1,7 @@
 package com.springboot.project.Bank_Management.service;
 
-import java.util.ArrayList;
+
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -67,26 +68,26 @@ public class BankService {
 		return null ;//throws bank not found ex
 		
 	}
-	public ResponseEntity<ResponseStructure<Bank>>  assignBranchToBank(int bankId ,int branchId) 
-	{
-		ResponseStructure<Bank> repost = new ResponseStructure<>();
-		if (bdao.findBank(bankId)!=null) {
-			if (brdao.findBranch(branchId)!=null) {
-				
-				 List<Branch> lis = new ArrayList<>();
-				 lis.add(brdao.findBranch(branchId));
-				 Bank bank =  bdao.findBank(bankId);
-				 bank.setBranches(lis);
-				 repost.setData(bdao.updateBank(bank,bankId));
-				repost.setMessage("Branch Has Been Assigned to Bank");
-				repost.setStatus(HttpStatus.OK.value());
-				return new ResponseEntity<ResponseStructure<Bank>>(repost,HttpStatus.OK ); 
-			}
-			return null; //Branch Not found Exception
-		}
-		return null; //bank not found exception
-	}
-	
+//	public ResponseEntity<ResponseStructure<Bank>>  assignBranchToBank(int bankId ,int branchId) 
+//	{
+//		ResponseStructure<Bank> repost = new ResponseStructure<>();
+//		if (bdao.findBank(bankId)!=null) {
+//			if (brdao.findBranch(branchId)!=null) {
+//				
+//				 List<Branch> lis = new ArrayList<>();
+//				 lis.add(brdao.findBranch(branchId));
+//				 Bank bank =  bdao.findBank(bankId);
+//				 bank.setBranches(lis);
+//				 repost.setData(bdao.updateBank(bank,bankId));
+//				repost.setMessage("Branch Has Been Assigned to Bank");
+//				repost.setStatus(HttpStatus.OK.value());
+//				return new ResponseEntity<ResponseStructure<Bank>>(repost,HttpStatus.OK ); 
+//			}
+//			return null; //Branch Not found Exception
+//		}
+//		return null; //bank not found exception
+//	}
+//	
 	public ResponseEntity<ResponseStructure<List<Bank>>>findAllBank() {
 		ResponseStructure<List<Bank>> repost = new ResponseStructure<>();
 		if (!bdao.findAll().isEmpty()) {
