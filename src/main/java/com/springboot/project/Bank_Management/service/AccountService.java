@@ -1,5 +1,9 @@
 package com.springboot.project.Bank_Management.service;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import com.springboot.project.Bank_Management.config.ResponseStructure;
 import com.springboot.project.Bank_Management.dao.AccountDao;
+import com.springboot.project.Bank_Management.dao.UserDao;
 import com.springboot.project.Bank_Management.dto.Account;
 import com.springboot.project.Bank_Management.dto.AccountType;
 import com.springboot.project.Bank_Management.dto.Transaction;
@@ -22,6 +27,9 @@ public class AccountService
 	
 	@Autowired
 	AccountDao dao;
+	
+	@Autowired
+	UserDao udao;
 	
 	public ResponseEntity<ResponseStructure<Account>> updateAccount(Account acc , int aid) {
 		
@@ -122,5 +130,43 @@ public class AccountService
 		return null;
 	} 
 	
+	public ResponseEntity<ResponseStructure<List<Transaction>>> getTransactionBetween(String uname, String upassword, int month) 
+	{
+		ResponseStructure<List<Transaction>> res = new ResponseStructure<>();
+
+		User u = udao.userLogin(uname, upassword);
+		if (u != null) {
+			
+				Account a = u.getAccount();
+				List<Transaction> tran = a.getTransact();
+				
+				List<Transaction> td = new ArrayList<>();
+
+				for (Transaction transaction : tran) {
+					LocalDate transactionDate = transaction.getTransactionTime().toLocalDate();
+					LocalDate now = LocalDate.now();
+					LocalDate then = now.minusMonths(month);
+
+					
+					if (transactionDate.isAfter(then) && transactionDate.isBefore(now)) {
+						
+						
+						td.add(transaction);
+					}
+					
+					res.setData(td);
+					res.setMessage("List of Transaction Last "+month+" Month");
+					res.setStatus(HttpStatus.FOUND.value());
+					
+				}
+				return new ResponseEntity<ResponseStructure<List<Transaction>>>(res, HttpStatus.FOUND);
+				
+
+
+		} else {
+			return null; // no user found
+		}
+		
+	}
 
 }

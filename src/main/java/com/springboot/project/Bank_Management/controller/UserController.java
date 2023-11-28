@@ -36,4 +36,12 @@ public class UserController {
 	public ResponseEntity<ResponseStructure<User>> deleteUser( @RequestParam int id ) {
 		return service.deleteUser(id);
 	}
+	
+	@GetMapping("/login")
+	public ResponseEntity<ResponseStructure<User>> userLogin( @RequestParam String uname, @RequestParam String upassword ) 
+	{
+		return service.userLogin(uname, upassword);
+	}
+	
+	
 }

@@ -5,8 +5,8 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-
 import com.springboot.project.Bank_Management.dto.Account;
+import com.springboot.project.Bank_Management.dto.Transaction;
 import com.springboot.project.Bank_Management.repository.AccountRepo;
 
 @Repository
@@ -93,6 +93,18 @@ public class AccountDao {
 		
 		return null;
 	}
+	
+	public List<Transaction> transaction(long  accno)
+	{
+		if (findAccountByAccountNo(accno) != null) 
+		{
+			
+			
+			return  findAccountByAccountNo(accno).getTransact();
+			
+		}
+		return null;
+	} 
 	
 
 }

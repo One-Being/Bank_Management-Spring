@@ -16,6 +16,9 @@ import com.springboot.project.Bank_Management.dto.Transaction;
 import com.springboot.project.Bank_Management.dto.TransactionStatus;
 import com.springboot.project.Bank_Management.dto.TransactionType;
 
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+
 @Service
 public class TransactionService {
 
@@ -24,6 +27,8 @@ public class TransactionService {
 	
 	@Autowired
 	AccountDao acdao;
+	
+	
 	
 	public ResponseEntity<ResponseStructure<Transaction>> sendMoney(Transaction t, long accno , String password)
 	{
@@ -37,6 +42,7 @@ public class TransactionService {
 						if(t.getAmount() > 0) {
 						t.setType(TransactionType.DEBITED);
 						t.setTransactionTime(LocalDateTime.now());
+						
 						t.setStatus(TransactionStatus.SUCCESSFUL);	
 						Transaction ta = tdao.saveTransaction(t);
 						acc.getTransact().add(ta);

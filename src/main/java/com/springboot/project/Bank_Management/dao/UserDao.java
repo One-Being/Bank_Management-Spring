@@ -14,6 +14,8 @@ public class UserDao {
 	@Autowired
 	UserRepo repo;
 	
+	
+	
 	public User saveUser(User a)
 	{
 		return repo.save(a);
@@ -66,6 +68,20 @@ public class UserDao {
 			return repo.save(b);
 		}
 		return null;
+	}
+	
+	public User userLogin(String uname, String accpassword) 
+	{
+		User u = repo.findUserByName(uname);
+		if(u != null) {
+			if(u.getAccount().getPassword().equals(accpassword)) {
+				return u;
+			}
+			return null;
+		}
+		return null;
+		
+		
 	}
 
 }

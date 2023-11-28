@@ -102,6 +102,20 @@ public class UserService {
 		return new ResponseEntity<ResponseStructure<User>>(repost,HttpStatus.NOT_FOUND );
 	}
 	
+	public ResponseEntity<ResponseStructure<User>> userLogin(String uname, String upassword) 
+	{
+		ResponseStructure<User> repost = new ResponseStructure<>();
+		User u = udao.userLogin(uname, upassword);
+		if (u != null) 
+		{
+			repost.setData(u);
+			repost.setMessage("Login Successfull");
+			repost.setStatus(HttpStatus.ACCEPTED.value());
+			return new ResponseEntity<ResponseStructure<User>>(repost,HttpStatus.NOT_FOUND );
+		}
+		return null;
+	}
+	
 	
 	
 	

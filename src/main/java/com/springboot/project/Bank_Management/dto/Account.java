@@ -11,6 +11,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
+import jakarta.persistence.SequenceGenerator;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -24,7 +25,8 @@ public class Account
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int accountId;
-	private long accountNumber;
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private long accountNumber; 
 	private String password;
 	private AccountType actype;
 	private long balance;
@@ -32,6 +34,7 @@ public class Account
 	private User user;
 	@OneToMany
 	private List<Transaction> transact;
+	
 	
 
 }

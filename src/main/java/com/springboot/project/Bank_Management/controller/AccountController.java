@@ -46,6 +46,11 @@ public class AccountController {
 		return service.transaction(accno);
 	}
 	
+	@GetMapping("getbetween")
+	public ResponseEntity<ResponseStructure<List<Transaction>>> getTransactionBetween(String uname, String upassword, int month) {
+		return service.getTransactionBetween(uname, upassword, month);
+	}
+	
 	
 	
 	
