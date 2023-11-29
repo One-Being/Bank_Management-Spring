@@ -17,6 +17,11 @@ import com.springboot.project.Bank_Management.dto.Bank;
 import com.springboot.project.Bank_Management.dto.Branch;
 import com.springboot.project.Bank_Management.dto.Manager;
 import com.springboot.project.Bank_Management.dto.User;
+import com.springboot.project.Bank_Management.exceptions.BankNotFoundException;
+import com.springboot.project.Bank_Management.exceptions.BranchNotFoundException;
+import com.springboot.project.Bank_Management.exceptions.InvalidManagerLoginException;
+
+import com.springboot.project.Bank_Management.exceptions.UserNotFoundException;
 
 @Service
 public class BranchService {
@@ -37,6 +42,7 @@ public class BranchService {
 	{
 		ResponseStructure<Branch> repost = new ResponseStructure<>();
 		Bank exBank = bdao.findBank(bankId);
+		if(exBank != null) {
 		Branch savedBranch = brdao.saveBranch(b);
 		exBank.getBranches().add(savedBranch);
 		savedBranch.setBank(exBank);
@@ -44,6 +50,8 @@ public class BranchService {
 		repost.setMessage("Branch Has Been Saved");
 		repost.setStatus(HttpStatus.CREATED.value());
 		return new ResponseEntity<ResponseStructure<Branch>>(repost,HttpStatus.CREATED );
+		}
+		throw new BankNotFoundException("Bank Not Found");
 	}
 	public ResponseEntity<ResponseStructure<Branch>> updateBranch(Branch b , int id) 
 	{
@@ -54,7 +62,7 @@ public class BranchService {
 		repost.setStatus(HttpStatus.OK.value());
 		return new ResponseEntity<ResponseStructure<Branch>>(repost,HttpStatus.OK );
 		}
-		return null ;//throws Branch not found ex
+		throw new BranchNotFoundException("Branch Not Found");
 		
 	}
 	public ResponseEntity<ResponseStructure<Branch>> deleteBranch( int id) 
@@ -70,7 +78,7 @@ public class BranchService {
 			repost.setStatus(HttpStatus.OK.value());
 			return new ResponseEntity<ResponseStructure<Branch>>(repost,HttpStatus.OK );
 		}
-		return null ;//throws Branch not found ex
+		throw new BranchNotFoundException("Branch Not Found");
 		
 	}
 	public ResponseEntity<ResponseStructure<Branch>>  assignBankToBranch(int branchId ,int bankId) 
@@ -85,9 +93,9 @@ public class BranchService {
 				repost.setStatus(HttpStatus.OK.value());
 				return new ResponseEntity<ResponseStructure<Branch>>(repost,HttpStatus.OK ); 
 			}
-			return null; //Bank Not found 
+			throw new BankNotFoundException("Bank Not Found");
 		}
-		return null; //Branch not found
+		throw new BranchNotFoundException("Branch Not Found");
 	}
 	
 	public ResponseEntity<ResponseStructure<List<Branch>>>findAllBranch() {
@@ -99,7 +107,7 @@ public class BranchService {
 			repost.setStatus(HttpStatus.FOUND.value());
 			return new ResponseEntity<ResponseStructure<List<Branch>>>(repost,HttpStatus.FOUND );
 		}
-		 return null ;//throw new BranchNotFoundException;
+		throw new BranchNotFoundException("Branch Not Found");
 	}
 	public ResponseEntity<ResponseStructure<Branch>> findBranch(int id) 
 	{
@@ -110,7 +118,7 @@ public class BranchService {
 		repost.setStatus(HttpStatus.FOUND.value());
 		return new ResponseEntity<ResponseStructure<Branch>>(repost,HttpStatus.FOUND );
 		}
-		return null ;//throws Branch not found ex
+		throw new BranchNotFoundException("Branch Not Found");
 	}
 	
 	public  ResponseEntity<ResponseStructure<User>> changeBranch(String mname , String mpassword,int uid, int nbid ) {
@@ -139,13 +147,14 @@ public class BranchService {
 					repost.setMessage("User can't changed to same branch");
 					repost.setStatus(HttpStatus.BAD_REQUEST.value());
 					return new ResponseEntity<ResponseStructure<User>>(repost,HttpStatus.BAD_REQUEST ) ; 
-				}return null;//branch not found ex
+				}
+				throw new BranchNotFoundException("Branch Not Found");
 			}
-			return null;//user not found ex
+			throw new UserNotFoundException("User Not Found");
 			
 		}
 		
-		return null;//mananger excep
+		throw new InvalidManagerLoginException("Invalid Login Credentials");
 		
 	}
 	

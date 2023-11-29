@@ -1,9 +1,9 @@
 package com.springboot.project.Bank_Management.service;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
+
 import java.util.ArrayList;
-import java.util.Iterator;
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +18,9 @@ import com.springboot.project.Bank_Management.dto.Account;
 import com.springboot.project.Bank_Management.dto.AccountType;
 import com.springboot.project.Bank_Management.dto.Transaction;
 import com.springboot.project.Bank_Management.dto.User;
+import com.springboot.project.Bank_Management.exceptions.AccountNotFoundException;
+import com.springboot.project.Bank_Management.exceptions.InvalidUserLoginException;
+
 
 @Service
 public class AccountService 
@@ -33,13 +36,18 @@ public class AccountService
 	
 	public ResponseEntity<ResponseStructure<Account>> updateAccount(Account acc , int aid) {
 		
-		ResponseStructure<Account> repost = new ResponseStructure<>();
+	if (dao.findAccount(aid) != null)
+	{
+	
+	ResponseStructure<Account> repost = new ResponseStructure<>();
 		
 		repost.setData(dao.updateAccount(aid, acc));
 		repost.setMessage("Account Has Been Updated ");
 		repost.setStatus(HttpStatus.OK.value());
 		
 		return new ResponseEntity<ResponseStructure<Account>>(repost,HttpStatus.OK);
+	}
+	throw new AccountNotFoundException("Account Not Found");
 		
 	}
 	
@@ -101,7 +109,7 @@ public class AccountService
 			}
 			
 		}
-		return null;
+		throw new AccountNotFoundException("Account Not Found");
 	}
 	
 	public ResponseEntity<ResponseStructure<Account>> findAccountByAccNo(long accno) 
@@ -113,7 +121,9 @@ public class AccountService
 			repost.setStatus(HttpStatus.FOUND.value());
 			
 			return new ResponseEntity<ResponseStructure<Account>>(repost,HttpStatus.FOUND);
-		}return null;
+		}
+
+		throw new AccountNotFoundException("Account Not Found");
 	}
 	public ResponseEntity<ResponseStructure<List<Transaction>>> transaction(long  accno)
 	{
@@ -127,7 +137,7 @@ public class AccountService
 			return new ResponseEntity<ResponseStructure<List<Transaction>>>(repost,HttpStatus.FOUND);
 			
 		}
-		return null;
+		throw new AccountNotFoundException("Account Not Found");
 	} 
 	
 	public ResponseEntity<ResponseStructure<List<Transaction>>> getTransactionBetween(String uname, String upassword, int month) 
@@ -164,7 +174,7 @@ public class AccountService
 
 
 		} else {
-			return null; // no user found
+			throw new InvalidUserLoginException("Invalid Login Credentials");
 		}
 		
 	}

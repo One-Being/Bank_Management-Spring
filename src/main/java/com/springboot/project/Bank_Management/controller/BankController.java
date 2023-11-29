@@ -23,9 +23,9 @@ public class BankController
 	BankService service;
 	
 	@PostMapping
-	public ResponseEntity<ResponseStructure<Bank>> saveBank(@RequestBody Bank bank, @RequestParam int brid) 
+	public ResponseEntity<ResponseStructure<Bank>> saveBank(@RequestBody Bank bank) 
 	{
-		return service.saveBank(bank,brid);
+		return service.saveBank(bank);
 		
 	}
 	

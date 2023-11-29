@@ -1,6 +1,6 @@
 package com.springboot.project.Bank_Management.service;
 
-import java.time.LocalDate;
+
 import java.time.LocalDateTime;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,9 +15,9 @@ import com.springboot.project.Bank_Management.dto.Account;
 import com.springboot.project.Bank_Management.dto.Transaction;
 import com.springboot.project.Bank_Management.dto.TransactionStatus;
 import com.springboot.project.Bank_Management.dto.TransactionType;
+import com.springboot.project.Bank_Management.exceptions.AccountNotFoundException;
 
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
+
 
 @Service
 public class TransactionService {
@@ -81,12 +81,12 @@ public class TransactionService {
 				repost.setStatus(HttpStatus.BAD_REQUEST.value());
 				return new ResponseEntity<ResponseStructure<Transaction>>(repost,HttpStatus.BAD_REQUEST);
 		}
-			repost.setMessage("To account Doesnot Exist");
-			repost.setStatus(HttpStatus.BAD_REQUEST.value());
-			return new ResponseEntity<ResponseStructure<Transaction>>(repost,HttpStatus.BAD_REQUEST);
+			throw new AccountNotFoundException("Account  Not Found");
 		}
 		repost.setMessage("Invaild Login Credentials");
 		repost.setStatus(HttpStatus.BAD_REQUEST.value());
 		return new ResponseEntity<ResponseStructure<Transaction>>(repost,HttpStatus.BAD_REQUEST);
 	}
+	
+	
 }

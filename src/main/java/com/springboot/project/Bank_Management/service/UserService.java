@@ -13,6 +13,9 @@ import com.springboot.project.Bank_Management.dto.AccountType;
 import com.springboot.project.Bank_Management.dto.Branch;
 import com.springboot.project.Bank_Management.dto.Manager;
 import com.springboot.project.Bank_Management.dto.User;
+import com.springboot.project.Bank_Management.exceptions.InvalidManagerLoginException;
+import com.springboot.project.Bank_Management.exceptions.InvalidUserLoginException;
+import com.springboot.project.Bank_Management.exceptions.UserNotFoundException;
 
 @Service
 public class UserService {
@@ -62,9 +65,7 @@ public class UserService {
 			return new ResponseEntity<ResponseStructure<User>>(repost,HttpStatus.CREATED);
 			
 		}
-		repost.setMessage("User Not Verified");
-		repost.setStatus(HttpStatus.NOT_ACCEPTABLE.value());
-		return new ResponseEntity<ResponseStructure<User>>(repost,HttpStatus.NOT_ACCEPTABLE);
+		throw new InvalidManagerLoginException("Invalid Login Credentials");
 		
 	}
 	public ResponseEntity<ResponseStructure<User>> findUser(int uid){
@@ -76,9 +77,7 @@ public class UserService {
 			
 			return new  ResponseEntity<ResponseStructure<User>>(repost,HttpStatus.FOUND);
 		}
-		repost.setMessage("User Not Found");
-		repost.setStatus(HttpStatus.NOT_FOUND.value());
-		return new  ResponseEntity<ResponseStructure<User>>(repost,HttpStatus.FOUND);
+		throw new UserNotFoundException("User  Not Found");
 	} 
 	
 	public ResponseEntity<ResponseStructure<User>> deleteUser(int uid) 
@@ -97,9 +96,7 @@ public class UserService {
 		return new ResponseEntity<ResponseStructure<User>>(repost,HttpStatus.OK );
 		}
 		
-		repost.setMessage("User Not  Found");
-		repost.setStatus(HttpStatus.NOT_FOUND.value());
-		return new ResponseEntity<ResponseStructure<User>>(repost,HttpStatus.NOT_FOUND );
+		throw new UserNotFoundException("User  Not Found");
 	}
 	
 	public ResponseEntity<ResponseStructure<User>> userLogin(String uname, String upassword) 
@@ -113,7 +110,7 @@ public class UserService {
 			repost.setStatus(HttpStatus.ACCEPTED.value());
 			return new ResponseEntity<ResponseStructure<User>>(repost,HttpStatus.NOT_FOUND );
 		}
-		return null;
+		throw new InvalidUserLoginException("Invalid Login Credentials");
 	}
 	
 	

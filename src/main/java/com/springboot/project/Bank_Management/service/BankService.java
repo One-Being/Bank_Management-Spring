@@ -13,7 +13,8 @@ import com.springboot.project.Bank_Management.config.ResponseStructure;
 import com.springboot.project.Bank_Management.dao.BankDao;
 import com.springboot.project.Bank_Management.dao.BranchDao;
 import com.springboot.project.Bank_Management.dto.Bank;
-import com.springboot.project.Bank_Management.dto.Branch;
+
+import com.springboot.project.Bank_Management.exceptions.BankNotFoundException;
 
 @Service
 public class BankService {
@@ -24,20 +25,11 @@ public class BankService {
 	@Autowired
 	BranchDao brdao;
 	
-	public ResponseEntity<ResponseStructure<Bank>> saveBank(Bank b, int branchId) 
+	public ResponseEntity<ResponseStructure<Bank>> saveBank(Bank b) 
 	{
 		ResponseStructure<Bank> repost = new ResponseStructure<>();
-		Branch ex = brdao.findBranch(branchId);
-		Bank saveBank = bdao.saveBank(b);
-			if (brdao.findBranch(branchId)!=null) {
-				ex.setBank(saveBank);
-				saveBank.getBranches().add(ex);
-				repost.setData(bdao.updateBank(saveBank, saveBank.getBankId()));
-				repost.setMessage("Bank Has Been  Saved and branch assigned");
-				repost.setStatus(HttpStatus.CREATED.value());
-				return new ResponseEntity<ResponseStructure<Bank>>(repost,HttpStatus.CREATED );
-			}
-			repost.setData(saveBank);
+		
+			repost.setData(bdao.saveBank(b));
 			repost.setMessage("Bank Has Been Saved");
 			repost.setStatus(HttpStatus.CREATED.value());
 			return new ResponseEntity<ResponseStructure<Bank>>(repost,HttpStatus.CREATED );
@@ -53,7 +45,7 @@ public class BankService {
 		repost.setStatus(HttpStatus.OK.value());
 		return new ResponseEntity<ResponseStructure<Bank>>(repost,HttpStatus.OK );
 		}
-		return null ;//throws bank not found ex
+		throw new BankNotFoundException("Bank Not Found");
 		
 	}
 	public ResponseEntity<ResponseStructure<Bank>> deleteBank( int id) 
@@ -65,7 +57,7 @@ public class BankService {
 			repost.setStatus(HttpStatus.OK.value());
 			return new ResponseEntity<ResponseStructure<Bank>>(repost,HttpStatus.OK );
 		}
-		return null ;//throws bank not found ex
+		throw new BankNotFoundException("Bank Not Found");
 		
 	}
 //	public ResponseEntity<ResponseStructure<Bank>>  assignBranchToBank(int bankId ,int branchId) 
@@ -97,7 +89,7 @@ public class BankService {
 			repost.setStatus(HttpStatus.FOUND.value());
 			return new ResponseEntity<ResponseStructure<List<Bank>>>(repost,HttpStatus.FOUND );
 		}
-		 return null ;//throw new BankNotFoundException("Bank not found ");
+		throw new BankNotFoundException("Bank Not Found");
 	}
 	public ResponseEntity<ResponseStructure<Bank>> findBank(int id) 
 	{
@@ -108,7 +100,7 @@ public class BankService {
 		repost.setStatus(HttpStatus.FOUND.value());
 		return new ResponseEntity<ResponseStructure<Bank>>(repost,HttpStatus.FOUND );
 		}
-		return null ;//throws bank not found ex
+		throw new BankNotFoundException("Bank Not Found");
 	}
 		
 	

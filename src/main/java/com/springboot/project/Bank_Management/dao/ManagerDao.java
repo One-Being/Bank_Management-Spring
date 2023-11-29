@@ -2,13 +2,8 @@ package com.springboot.project.Bank_Management.dao;
 
 import java.util.List;
 import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Repository;
-
-import com.springboot.project.Bank_Management.config.ResponseStructure;
 import com.springboot.project.Bank_Management.dto.Manager;
 import com.springboot.project.Bank_Management.repository.ManagerRepo;
 

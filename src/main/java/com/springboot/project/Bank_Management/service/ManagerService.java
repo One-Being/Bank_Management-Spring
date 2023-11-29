@@ -16,6 +16,9 @@ import com.springboot.project.Bank_Management.dao.ManagerDao;
 
 
 import com.springboot.project.Bank_Management.dto.Manager;
+import com.springboot.project.Bank_Management.exceptions.BranchNotFoundException;
+import com.springboot.project.Bank_Management.exceptions.InvalidManagerLoginException;
+import com.springboot.project.Bank_Management.exceptions.ManagerNotFoundException;
 import com.springboot.project.Bank_Management.repository.ManagerRepo;
 
 @Service
@@ -34,12 +37,15 @@ public class ManagerService {
 	{
 		ResponseStructure<Manager> repost = new ResponseStructure<>();
 		Manager savedManager = brdao.saveManager(b);
+		if(bdao.findBranch(branchId)!= null) {
 		bdao.findBranch(branchId).setManager(savedManager);
 		savedManager.setBranch(bdao.findBranch(branchId));
 		repost.setData(brdao.updateManager(savedManager.getManagerId(),savedManager));
 		repost.setMessage("Manager Has Been Saved");
 		repost.setStatus(HttpStatus.CREATED.value());
 		return new ResponseEntity<ResponseStructure<Manager>>(repost,HttpStatus.CREATED );
+		}
+		throw new BranchNotFoundException("Branch Not Found");
 	}
 	public ResponseEntity<ResponseStructure<Manager>> updateManager(Manager b , int id) 
 	{
@@ -50,7 +56,8 @@ public class ManagerService {
 		repost.setStatus(HttpStatus.OK.value());
 		return new ResponseEntity<ResponseStructure<Manager>>(repost,HttpStatus.OK );
 		}
-		return null ;//throws Manager not found ex
+		throw new ManagerNotFoundException("Manager Not Found");
+		
 		
 	}
 	public ResponseEntity<ResponseStructure<Manager>> deleteManager(int id) 
@@ -65,7 +72,7 @@ public class ManagerService {
 			repost.setStatus(HttpStatus.OK.value());
 			return new ResponseEntity<ResponseStructure<Manager>>(repost,HttpStatus.OK );
 		}
-		return null ;//throws Manager not found ex
+		throw new ManagerNotFoundException("Manager Not Found");
 		
 	}
 	
@@ -79,8 +86,10 @@ public class ManagerService {
 			repost.setStatus(HttpStatus.FOUND.value());
 			return new ResponseEntity<ResponseStructure<List<Manager>>>(repost,HttpStatus.FOUND );
 		}
-		 return null ;//throw new ManagerNotFoundException;
+		throw new ManagerNotFoundException("Manager Not Found");
 	}
+	
+	
 	public ResponseEntity<ResponseStructure<Manager>> findManager(int id) 
 	{
 		ResponseStructure<Manager> repost = new ResponseStructure<>();
@@ -90,13 +99,14 @@ public class ManagerService {
 		repost.setStatus(HttpStatus.FOUND.value());
 		return new ResponseEntity<ResponseStructure<Manager>>(repost,HttpStatus.FOUND );
 		}
-		return null ;//throws Manager not found ex
+		throw new ManagerNotFoundException("Manager Not Found");
 	}
 	
 	public ResponseEntity<ResponseStructure<Manager>>  loginManager(String name , String password) 
 	{
 		Manager man = repo.loginMananger(name);
 		ResponseStructure<Manager> repost = new ResponseStructure<>();
+		if(man != null) {
 		if (man.getName() != null) 
 		{
 			if (man.getPassword().equals(password)) 
@@ -107,17 +117,12 @@ public class ManagerService {
 				return new ResponseEntity<ResponseStructure<Manager>>(repost,HttpStatus.OK );
 				
 			}
-			repost.setData(man);
-			repost.setMessage("Login not  Successfull - password is not matching");
-			repost.setStatus(HttpStatus.NOT_ACCEPTABLE.value());
-			return new ResponseEntity<ResponseStructure<Manager>>(repost,HttpStatus.NOT_ACCEPTABLE );
+			throw new InvalidManagerLoginException("Invalid Login Credentials");
 			
 		}
-		repost.setData(man);
-		repost.setMessage("Login Not Successfull - Manager is not present");
-		repost.setStatus(HttpStatus.NOT_FOUND.value());
-		
-		return new ResponseEntity<ResponseStructure<Manager>>(repost,HttpStatus.NOT_FOUND );
+		throw new InvalidManagerLoginException("Invalid Login Credentials");
+		}
+		throw new ManagerNotFoundException("Manager Not Found");
 		
 	}
 	
