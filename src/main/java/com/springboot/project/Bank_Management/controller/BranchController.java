@@ -17,6 +17,8 @@ import com.springboot.project.Bank_Management.dto.Branch;
 import com.springboot.project.Bank_Management.dto.User;
 import com.springboot.project.Bank_Management.service.BranchService;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("/branch")
 public class BranchController 
@@ -25,7 +27,7 @@ public class BranchController
 	BranchService service;
 	
 	@PostMapping
-	public ResponseEntity<ResponseStructure<Branch>> saveBranch(@RequestBody Branch Branch ,  @RequestParam int branchId) 
+	public ResponseEntity<ResponseStructure<Branch>> saveBranch(@RequestBody @Valid Branch Branch ,  @RequestParam int branchId) 
 	{
 		return service.saveBranch(Branch,branchId);
 		
@@ -38,7 +40,7 @@ public class BranchController
 	}
 	
 	@PutMapping
-	public  ResponseEntity<ResponseStructure<Branch>> updateBranch(@RequestBody Branch b, @RequestParam int id) 
+	public  ResponseEntity<ResponseStructure<Branch>> updateBranch(@RequestBody @Valid Branch b, @RequestParam int id) 
 	{
 		return service.updateBranch(b,id);
 		

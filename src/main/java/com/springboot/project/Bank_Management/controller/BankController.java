@@ -15,6 +15,8 @@ import com.springboot.project.Bank_Management.config.ResponseStructure;
 import com.springboot.project.Bank_Management.dto.Bank;
 import com.springboot.project.Bank_Management.service.BankService;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("/bank")
 public class BankController 
@@ -23,7 +25,7 @@ public class BankController
 	BankService service;
 	
 	@PostMapping
-	public ResponseEntity<ResponseStructure<Bank>> saveBank(@RequestBody Bank bank) 
+	public ResponseEntity<ResponseStructure<Bank>> saveBank(@RequestBody @Valid Bank bank) 
 	{
 		return service.saveBank(bank);
 		
@@ -36,7 +38,7 @@ public class BankController
 	}
 	
 	@PutMapping
-	public  ResponseEntity<ResponseStructure<Bank>> updateBank(@RequestBody Bank b, @RequestParam int id) 
+	public  ResponseEntity<ResponseStructure<Bank>> updateBank(@RequestBody @Valid Bank b, @RequestParam int id) 
 	{
 		return service.updateBank(b,id);
 		

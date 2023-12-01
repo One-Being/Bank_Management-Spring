@@ -17,6 +17,8 @@ import com.springboot.project.Bank_Management.dto.Account;
 import com.springboot.project.Bank_Management.dto.Transaction;
 import com.springboot.project.Bank_Management.service.AccountService;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("/account")
 public class AccountController {
@@ -25,7 +27,7 @@ public class AccountController {
 	AccountService service;
 	
 	@PostMapping
-	public  ResponseEntity<ResponseStructure<Account>> updateAccount(@RequestBody Account acc ,@RequestParam int id ){
+	public  ResponseEntity<ResponseStructure<Account>> updateAccount( @RequestBody @Valid Account acc ,@RequestParam int id ){
 		return service.updateAccount(acc, id);
 	}
 	

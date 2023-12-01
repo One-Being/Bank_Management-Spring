@@ -15,6 +15,8 @@ import com.springboot.project.Bank_Management.config.ResponseStructure;
 import com.springboot.project.Bank_Management.dto.Manager;
 import com.springboot.project.Bank_Management.service.ManagerService;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("/manager")
 public class ManagerController {
@@ -23,7 +25,7 @@ public class ManagerController {
 	ManagerService service;
 	
 	@PostMapping
-	public ResponseEntity<ResponseStructure<Manager>> saveManager(@RequestBody Manager manager ,  @RequestParam int branchId) 
+	public ResponseEntity<ResponseStructure<Manager>> saveManager(@RequestBody @Valid Manager manager ,  @RequestParam int branchId) 
 	{
 		return service.saveManager(manager,branchId);
 		
@@ -36,7 +38,7 @@ public class ManagerController {
 	}
 	
 	@PutMapping
-	public  ResponseEntity<ResponseStructure<Manager>> updateManager(@RequestBody Manager b, @RequestParam int id) 
+	public  ResponseEntity<ResponseStructure<Manager>> updateManager(@RequestBody @Valid Manager b, @RequestParam int id) 
 	{
 		return service.updateManager(b,id);
 		

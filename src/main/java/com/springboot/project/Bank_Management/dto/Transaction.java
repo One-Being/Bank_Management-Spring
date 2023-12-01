@@ -10,7 +10,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-
+import jakarta.validation.constraints.Min;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -25,6 +25,7 @@ public class Transaction
 	private int transactionId;
 	
 	private int amount;
+	@Min(value = 6)
 	private long toAccount;
 	private LocalDateTime transactionTime;
 	private TransactionType type;

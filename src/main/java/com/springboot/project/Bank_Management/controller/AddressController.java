@@ -15,6 +15,8 @@ import com.springboot.project.Bank_Management.dto.Manager;
 import com.springboot.project.Bank_Management.dto.User;
 import com.springboot.project.Bank_Management.service.AddressService;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("/address")
 public class AddressController 
@@ -23,20 +25,20 @@ public class AddressController
 	AddressService service;
 	
 	@PostMapping
-	public  ResponseEntity<ResponseStructure<User>> createAddressForUser(@RequestBody Address add , int uid ){
+	public  ResponseEntity<ResponseStructure<User>> createAddressForUser(@RequestBody @Valid Address add , int uid ){
 		return service.createAddressForUser(add, uid);
 	}
 	
 	@PostMapping("/createforbranch")
-	public  ResponseEntity<ResponseStructure<Branch>> createAddressForBranch(@RequestBody Address add , int bid ){
+	public  ResponseEntity<ResponseStructure<Branch>> createAddressForBranch(@RequestBody @Valid Address add , int bid ){
 		return service.createAddressForBranch(add, bid);
 	}
 	@PostMapping("/createformanager")
-	public  ResponseEntity<ResponseStructure<Manager>> createAddressForManager(@RequestBody Address add , int mid ){
+	public  ResponseEntity<ResponseStructure<Manager>> createAddressForManager(@RequestBody @Valid Address add , int mid ){
 		return service.createAddressForManager(add, mid);
 	}
 	@PutMapping
-	public  ResponseEntity<ResponseStructure<Address>> updateAddress(@RequestBody Address add , int aid ){
+	public  ResponseEntity<ResponseStructure<Address>> updateAddress(@RequestBody @Valid Address add , int aid ){
 		return service.updateAddress(add, aid);
 	}
 	

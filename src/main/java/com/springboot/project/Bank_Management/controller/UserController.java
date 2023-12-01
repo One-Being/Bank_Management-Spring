@@ -14,6 +14,8 @@ import com.springboot.project.Bank_Management.config.ResponseStructure;
 import com.springboot.project.Bank_Management.dto.User;
 import com.springboot.project.Bank_Management.service.UserService;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("/user")
 public class UserController {
@@ -22,7 +24,7 @@ public class UserController {
       UserService service;
 	
 	@PostMapping
-	public ResponseEntity<ResponseStructure<User>> SaveUser(@RequestBody User u , @RequestParam int acctype , @RequestParam String mname, @RequestParam String mpassword ) {
+	public ResponseEntity<ResponseStructure<User>> SaveUser(@RequestBody @Valid User u , @RequestParam int acctype , @RequestParam String mname, @RequestParam String mpassword ) {
 		return service.saveUser(u, acctype, mname, mpassword);
 		
 	}

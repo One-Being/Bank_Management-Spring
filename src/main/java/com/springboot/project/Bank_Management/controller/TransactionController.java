@@ -12,6 +12,8 @@ import com.springboot.project.Bank_Management.config.ResponseStructure;
 import com.springboot.project.Bank_Management.dto.Transaction;
 import com.springboot.project.Bank_Management.service.TransactionService;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("/transaction")
 public class TransactionController {
@@ -20,7 +22,7 @@ public class TransactionController {
 	TransactionService service ;
 	
 	@PostMapping
-	public ResponseEntity<ResponseStructure<Transaction>> send(@RequestBody Transaction t , @RequestParam long accno, @RequestParam String password) 
+	public ResponseEntity<ResponseStructure<Transaction>> send(@RequestBody @Valid Transaction t , @RequestParam long accno, @RequestParam String password) 
 	{
 		return service.sendMoney(t, accno,password);
 	}
